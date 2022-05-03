@@ -21,7 +21,19 @@ router.get('/:id', (req, res) => {
         attributes: { exclude: ['password'] },
         where: {
             id: req.params.id
-        }
+        },
+        include: [
+            {
+              model: Post,
+              attributes: ['id', 'title', 'post_url', 'created_at']
+            },
+            {
+              model: Post,
+              attributes: ['title'],
+              through: Vote,
+              as: 'voted_posts'
+            }
+          ]
     })
     .then(dbUserData => {
         if(!dbUserData) {
@@ -70,17 +82,17 @@ router.put('/:id', (req, res) => {
             id: req.params.id
         }
     })
-    // .then(dbUserData => {
-    //     if (!dbUserData[0]) {
-    //         res.status(404).json({ message: 'No user found with this id' });
-    //         return;
-    //     }
-    //     res.json(dbUserData);
-    // })
-    // .catch(err => {
-    //     console.log(err);
-    //     res.status(500).json(err);
-    // })
+    .then(dbUserData => {
+        if (!dbUserData[0]) {
+            res.status(404).json({ message: 'No user found with this id' });
+            return;
+        }
+        res.json(dbUserData);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    })
 });
 
 // login route
