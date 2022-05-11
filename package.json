@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
+    "test": "jest",
     "start": "node server.js"
   },
   "author": "",
@@ -26,5 +27,8 @@
     "url": "https://github.com/DavonHB/just-tech-news/issues"
   },
   "homepage": "https://github.com/DavonHB/just-tech-news#readme",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "jest": "^28.1.0"
+  }
 }
